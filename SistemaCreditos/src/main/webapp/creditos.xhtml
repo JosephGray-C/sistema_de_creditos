@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>SGC - Creditos</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Tienda online. Ofrecemos suplementos para gimnasio, tecnología, gadgets, artículos para el hogar, y más. Todo en un solo lugar. ¡Vende con nosotros!" />
+        <meta name="robots" content="index, follow" />
+        <meta name="application-name" content="SGC" />
+        <meta name="keywords" content="suplementos para gimnasio, tecnología, gadgets, accesorios para smartphones, smart home, decoración del hogar, artículos para mascotas, equipos para deportes, ropa para bebés, juguetes educativos" />
+        <meta property="og:title" content="SGC - Tienda Online" />
+        <meta property="og:description" content="Tienda online especializada en pedidos y stock. Encuentra suplementos para gimnasio, gadgets, artículos para el hogar y más." />
+        <meta property="og:image" content="#{resource['imgs/SGClogo.png']}" />
+        <meta property="og:url" content="https://SGCworld.shop/" />
+        <meta property="og:site_name" content="SGC" />
+        <meta property="og:type" content="website" />
+        <link rel="icon" href="#{resource['imgs/SGClogo.png']}" type="image/x-icon" />
+        <link rel="stylesheet" href="#{resource['css/necolas.github.io_normalize.css_8.0.1_normalize.css']}" />
+        <link rel="stylesheet" href="#{resource['css/styles.css']}" />
+        <link rel="stylesheet" href="#{resource['css/fonts.css']}" />
+    </h:head>
+    <h:body>
+        <header class="header">
+            <div class="header__title-container">
+                <span class="header__title">*Bienvenido al Sistema de Gestión de Créditos</span>
+            </div>
+            <div class="header__utility-bar-container">
+                <span class="header__nav-bar-mobile-icon-container">
+                    <i class="header__nav-bar-icon fa-solid fa-bars"></i>
+                </span>
+                <a class="header__brand-name-container" href="index.xhtml">
+                    <h3 class="header__brand-name title">SGC</h3>
+                </a>
+                <nav class="header__nav-bar" id="categorieLink">
+                    <h:form>
+                        <div style="display: flex; gap: 16px;" class="ele">
+                            <h:outputLink value="clientes.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">Clientes</h:outputLink>
+                            <h:outputLink value="creditos.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">Créditos</h:outputLink>
+                            <h:outputLink value="pagos.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">Pagos</h:outputLink>
+                        </div>
+                    </h:form>
+                </nav>
+            </div>
+        </header>
+
+        <p:growl id="msgs" showDetail="true" life="4000" />
+        <main>
+            <section class="main__introductory-section-container">
+                <div class="main__introductory-image-container"></div>
+                <div class="main__extra-information-container">
+                    <h3 class="main__extra-information-title">Créditos</h3>
+                    <p class="main__extra-information-description">¡Gestiona los créditos registrados!</p>
+                    <h:form styleClass="main__extra-information-button-container">
+                        <p:commandButton value="Agregar"
+                                         onclick="PF('dlgNuevoCredito').show();"
+                                         styleClass="main__extra-information-button btn"
+                                         style="background-color: black; border: none;" 
+                                         type="button"/>
+                    </h:form>
+                </div>
+            </section>
+
+            <section style="margin-top:100px">
+                <h:form id="mainForm" styleClass="main__crud-section-container" style="margin: 2rem;">
+                    <p:dataTable var="credito" value="#{creditoController.all}" editable="true"
+                                 styleClass="crud-table" style="width:100%;"
+                                 emptyMessage="No hay créditos registrados aún">
+
+                        <p:column headerText="ID">
+                            <h:outputText value="#{credito.id}" />
+                        </p:column>
+                        <p:column headerText="Cliente ID">
+                            <h:outputText value="#{credito.idCliente}" />
+                        </p:column>
+                        <p:column headerText="Monto">
+                            <h:outputText value="#{credito.monto}" />
+                        </p:column>
+                        <p:column headerText="Tasa (%)">
+                            <h:outputText value="#{credito.tasaInteres}" />
+                        </p:column>
+                        <p:column headerText="Plazo (meses)">
+                            <h:outputText value="#{credito.plazoMeses}" />
+                        </p:column>
+                        <p:column headerText="Fecha Inicio">
+                            <h:outputText value="#{credito.fechaInicio}" />
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{credito.estado}" />
+                        </p:column>
+
+                        <p:column headerText="Editar">
+                            <p:commandButton icon="pi pi-pencil" title="Editar"
+                                             update=":mainForm :editarForm"
+                                             oncomplete="PF('dlgEditarCredito').show()"
+                                             process="@this"
+                                             actionListener="#{creditoController.prepareUpdate(credito)}"
+                                             styleClass="ui-button-warning" />
+                        </p:column>
+
+                        <p:column headerText="Eliminar">
+                            <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{creditoController.delete(credito)}"
+                                             update=":mainForm msgs" process="@this"
+                                             styleClass="ui-button-danger" />
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="Nuevo Crédito" icon="pi pi-plus" onclick="PF('dlgNuevoCredito').show()"
+                                     type="button" styleClass="btn btn-primary"
+                                     style="margin-top: 1rem; background-color:black; border:none;" />
+
+
+                </h:form>
+            </section>
+        </main>
+
+        <!-- Diálogo para nuevo crédito - Formulario independiente -->
+        <h:form id="nuevoForm">
+            <p:dialog header="Registrar Nuevo Crédito" widgetVar="dlgNuevoCredito"
+                      modal="true" resizable="false" draggable="false" closable="false">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="clienteId" value="Cliente ID:" />
+                    <p:inputText id="clienteId" value="#{creditoController.selectedCredito.idCliente}" required="true" />
+
+                    <h:outputLabel for="monto" value="Monto:" />
+                    <p:inputText id="monto" value="#{creditoController.selectedCredito.monto}" required="true" />
+
+                    <h:outputLabel for="tasa" value="Tasa de Interés (%):" />
+                    <p:inputText id="tasa" value="#{creditoController.selectedCredito.tasaInteres}" required="true" />
+
+                    <h:outputLabel for="plazo" value="Plazo (meses):" />
+                    <p:inputText id="plazo" value="#{creditoController.selectedCredito.plazoMeses}" required="true" />
+
+                    <h:outputLabel for="fecha" value="Fecha Inicio:" />
+                    <p:calendar id="fecha" value="#{creditoController.selectedCredito.fechaInicio}"
+                                pattern="yyyy-MM-dd" required="true" />
+                </h:panelGrid>
+                <f:facet name="footer">
+                    <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{creditoController.insert}"
+                                     update=":mainForm :msgs" oncomplete="PF('dlgNuevoCredito').hide()"
+                                     styleClass="btn btn-success" />
+                    <p:commandButton value="Cancelar" icon="pi pi-times"
+                                     onclick="PF('dlgNuevoCredito').hide()" type="button"
+                                     styleClass="btn btn-secondary" />
+                </f:facet>
+            </p:dialog>
+        </h:form>
+
+        <!-- Diálogo para editar crédito - Formulario independiente -->
+        <h:form id="editarForm">
+            <p:dialog header="Editar Crédito" widgetVar="dlgEditarCredito"
+                      modal="true" resizable="false" draggable="false" closable="false">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="clienteIdE" value="Cliente ID:" />
+                    <p:inputText id="clienteIdE" value="#{creditoController.selectedCredito.idCliente}" required="true" />
+
+                    <h:outputLabel for="montoE" value="Monto:" />
+                    <p:inputText id="montoE" value="#{creditoController.selectedCredito.monto}" required="true" />
+
+                    <h:outputLabel for="tasaE" value="Tasa de Interés (%):" />
+                    <p:inputText id="tasaE" value="#{creditoController.selectedCredito.tasaInteres}" required="true" />
+
+                    <h:outputLabel for="plazoE" value="Plazo (meses):" />
+                    <p:inputText id="plazoE" value="#{creditoController.selectedCredito.plazoMeses}" required="true" />
+
+                    <h:outputLabel for="fechaE" value="Fecha Inicio:" />
+                    <p:calendar id="fechaE" value="#{creditoController.selectedCredito.fechaInicio}"
+                                pattern="yyyy-MM-dd" required="true" />
+                    <h:outputLabel for="estadoE" value="Estado:" />
+                    <p:inputText id="estadoE" value="#{creditoController.selectedCredito.estado}" required="true" />
+                </h:panelGrid>
+                <f:facet name="footer">
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{creditoController.update(creditoController.selectedCredito)}"
+                                     update=":mainForm :msgs"
+                                     process="@form"
+                                     oncomplete="PF('dlgEditarCredito').hide()"
+                                     styleClass="btn btn-success" />
+                    <p:commandButton value="Cancelar" icon="pi pi-times"
+                                     onclick="PF('dlgEditarCredito').hide()" type="button"
+                                     styleClass="btn btn-secondary" />
+                </f:facet>
+            </p:dialog>
+        </h:form>
+        <footer class="footer">
+            <div class="footer__icon-container">
+                <i class="fa-regular fa-handshake"></i>
+            </div>
+            <div class="footer__information-container">
+                <small class="footer__copyright__content">© 2025, SGC</small>
+                <small class="footer__copyright__content">Tecnología de SGC</small>
+                <ul class="footer__policies-list">
+                    <li><small class="footer__policie-item-container">.Política de reembolso</small></li>
+                    <li><small class="footer__policie-item-container">.Política de privacidad</small></li>
+                    <li><small class="footer__policie-item-container">.Términos del servicio</small></li>
+                    <li><small class="footer__policie-item-container">.Política de envío</small></li>
+                    <li><small class="footer__policie-item-container">.Información de contacto</small></li>
+                </ul>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="https://kit.fontawesome.com/4558bafe49.js" crossorigin="anonymous"></script>
+        <script src="#{resource['js/mobile-nav.js']}" crossorigin="anonymous"></script>
+        <script src="#{resource['js/stickyHeader.js']}" crossorigin="anonymous"></script>
+    </h:body>
+</html>

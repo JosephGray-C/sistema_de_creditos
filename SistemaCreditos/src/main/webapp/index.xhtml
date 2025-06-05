@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SGC - Pagina de inicio</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Tienda online. Ofrecemos suplementos para gimnasio, tecnología, gadgets, artículos para el hogar, y más. Todo en un solo lugar. ¡Vende con nosotros!" />
+	<meta name="robots" content="index, follow" />
+	<meta name="application-name" content="Vibrant" />
+	<meta name="keywords" content="suplementos para gimnasio, tecnología, gadgets, accesorios para smartphones, smart home, decoración del hogar, artículos para mascotas, equipos para deportes, ropa para bebés, juguetes educativos" />
+	<meta property="og:title" content="Vibrant - Tienda Online" />
+	<meta property="og:description" content="Tienda online especializada en pedidos y stock. Encuentra suplementos para gimnasio, gadgets, artículos para el hogar y más." />
+	<meta property="og:image" content="#{resource['imgs/Vibrantlogo.png']}" />
+	<meta property="og:url" content="https://vibrantworld.shop/" />
+	<meta property="og:site_name" content="Vibrant" />
+	<meta property="og:type" content="website" />
+	<link rel="icon" href="#{resource['imgs/Vibrantlogo.png']}" type="image/x-icon" />
+	<link rel="stylesheet" href="#{resource['css/necolas.github.io_normalize.css_8.0.1_normalize.css']}" />
+	<link rel="stylesheet" href="#{resource['css/styles.css']}" />
+	<link rel="stylesheet" href="#{resource['css/fonts.css']}" />
+
+
+
+</h:head>
+<body>
+
+	<header class="header">
+		<div class="header__title-container">
+			<span class="header__title">*Bienvenido al Sistema de Gestión de Créditos</span>
+		</div>
+		<div class="header__utility-bar-container">
+			<span class="header__nav-bar-mobile-icon-container"><i
+				class="header__nav-bar-icon fa-solid fa-bars"></i></span> <a
+				class="header__brand-name-container" href="#"><h3
+					class="header__brand-name title">SGC</h3></a>
+			<nav class="header__nav-bar" id="categorieLink">
+				<h:form>
+				    <div style="display: flex; gap: 16px;" class="ele">
+				        <h:outputLink value="clientes.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">
+				            Clientes
+				        </h:outputLink>
+				
+				        <h:outputLink value="creditos.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">
+				            Créditos
+				        </h:outputLink>
+				
+				        <h:outputLink value="pagos.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">
+				            Pagos
+				        </h:outputLink>
+				
+			
+				    </div>
+				</h:form>
+
+				<div class="header__page-controls">
+					
+				</div>
+			</nav>
+		</div>
+	</header>
+	
+	<main>
+		<section class="main__introductory-section-container">
+			<div class="main__introductory-image-container"></div>
+			<div class="main__extra-information-container">
+				<h3 class="main__extra-information-title">Clientes</h3>
+				<p class="main__extra-information-description">¡Agregar clientes!</p>
+				<h:form styleClass="main__extra-information-button-container">
+			    
+				       	<p:commandButton value="Agregar"
+							action="#{clienteController.goToCategory}"
+							styleClass="main__extra-information-button btn"
+							style="background-color: rgb(0, 0, 0);border:none" />
+			   
+			</h:form>
+
+			</div>
+		</section>
+		
+
+		<section class="main__FAQ-section-container">
+	<h:form id="FAQForm">
+		<div class="FAQcontainer">
+			<div class="main__FAQ-title-container">
+				<h2 class="main__FAQ-title">Preguntas frecuentes:</h2>
+			</div>
+			<p:accordionPanel widgetVar="basic" activeIndex="-1">
+				<p:tab>
+					<f:facet name="title">
+						<span class="main__FAQ-item-header-text">
+							<i class="fa-regular fa-address-card"></i> Sobre el sistema
+						</span>
+					</f:facet>
+					<p class="main__FAQ-item-inside-text">
+						El sistema ERS fue desarrollado para facilitar la gestión de créditos, pagos y clientes para pequeñas entidades financieras. Permite registrar clientes, otorgar créditos, generar cronogramas automáticos, recibir pagos y obtener reportes de forma sencilla y centralizada. 
+						<strong>
+							<a style="text-decoration: underline; color: #000000BF" href="#contact">
+								Contáctanos
+							</a>
+						</strong>
+					</p>
+				</p:tab>
+
+				<p:tab>
+					<f:facet name="title">
+						<span class="main__FAQ-item-header-text">
+							<i class="fa-solid fa-money-check-dollar"></i> ¿Cómo registrar un nuevo crédito?
+						</span>
+					</f:facet>
+					<p class="main__FAQ-item-inside-text">
+						Para registrar un crédito, primero debe agregarse un cliente. Luego, accede al módulo de Créditos, llena los datos correspondientes (monto, interés, plazos) y el sistema generará automáticamente el cronograma de pagos.
+					</p>
+				</p:tab>
+
+				<p:tab>
+					<f:facet name="title">
+						<span class="main__FAQ-item-header-text">
+							<i class="fa-solid fa-bag-shopping"></i> ¿Cómo registrar un pago?
+						</span>
+					</f:facet>
+					<p class="main__FAQ-item-inside-text">
+						Desde el módulo de Pagos, puedes seleccionar el cliente o el crédito activo y registrar el monto pagado. El sistema actualiza automáticamente el estado del crédito y del cronograma.
+					</p>
+				</p:tab>
+
+				<p:tab>
+					<f:facet name="title">
+						<span class="main__FAQ-item-header-text">
+							<i class="fa-regular fa-handshake"></i> ¿Qué beneficios ofrece este sistema?
+						</span>
+					</f:facet>
+					<div class="main__FAQ-item-inside-text">
+						<ul style="display: flex; flex-wrap: wrap; list-style: none;">
+							<li style="width: 100%"><strong>- Centralización de procesos:</strong> todos los datos importantes en un mismo lugar.</li>
+							<li style="width: 100%"><strong>- Automatización:</strong> generación automática de cronogramas y alertas.</li>
+							<li style="width: 100%"><strong>- Control de mora:</strong> seguimiento fácil de pagos atrasados.</li>
+							<li style="width: 100%"><strong>- Reportes:</strong> obtención rápida de información clave para la toma de decisiones.</li>
+							<li style="width: 100%"><strong>- Fácil de usar:</strong> interfaz sencilla y clara para el usuario final.</li>
+						</ul>
+					</div>
+				</p:tab>
+
+				<p:tab>
+					<f:facet name="title">
+						<span class="main__FAQ-item-header-text">
+							<i class="fa-solid fa-truck-fast"></i> ¿Se puede exportar la información?
+						</span>
+					</f:facet>
+					<div class="main__FAQ-item-inside-text">
+						<ul style="display: flex; flex-wrap: wrap; list-style: none;">
+							<li style="width: 100%">- Sí. El sistema permite generar reportes descargables de créditos, pagos, clientes y estados de cuenta.</li>
+							<li style="width: 100%">- También puedes imprimir cronogramas individuales o resúmenes mensuales.</li>
+						</ul>
+					</div>
+				</p:tab>
+			</p:accordionPanel>
+		</div>
+	</h:form>
+</section>
+
+
+
+	<section class="main__social-media-section-container">
+	<div class="main__social-media-section-img-container">
+		<img loading="lazy" class="img" src="resources/imgs/socialMediaSectionImg.jpg"
+			alt="Contacto y redes del sistema ERS" />
+	</div>
+	<div class="main__social-media-information-container">
+		<h3 class="main__social-media-section-title" id="contact">
+			Contáctanos o consulta soporte
+		</h3>
+		<p class="main__social-media-section-description">
+			¿Tienes preguntas, necesitas ayuda o quieres solicitar mejoras? Puedes contactarnos a través de nuestros canales de soporte y redes oficiales.
+			Nos aseguramos de responder lo más pronto posible para ayudarte con el sistema ERS.
+		</p>
+		<ul class="main__social-media-section-contact-information">
+			<li style="width: 100%">
+				<a href="https://wa.me/50663943191" target="_blank" class="link main__social-media-section-link">
+					<i class="fa-brands fa-whatsapp"></i>
+					<span> +506 1111-1111 (Soporte técnico)</span>
+				</a>
+			</li>
+			<li style="margin-top: 5px">
+				<a target="_blank" href="" class="link main__social-media-section-link">
+					<i class="fa-brands fa-instagram"></i>
+				</a>
+			</li>
+			<li style="margin-left: 10px; margin-top: 5px">
+				<a target="_blank" href="" class="link main__social-media-section-link">
+					<i class="fa-brands fa-tiktok"></i>
+				</a>
+			</li>
+			<li style="margin-left: 10px; margin-top: 5px">
+				<a target="_blank" href="" class="link main__social-media-section-link">
+					<i class="fa-brands fa-facebook"></i>
+				</a>
+			</li>
+		</ul>
+	</div>
+</section>
+
+		<section class="main__contact-section-container">
+			<h:form>
+				<p:growl id="msgs" showDetail="true"
+					skipDetailIfEqualsSummary="true" life="4000" />
+				<div class="main__contact-section-form-container" action=""
+					method="post">
+					<h3 class="main__contact-section-title">Dejanos un comentario:</h3>
+					<p:inputText
+					    value="#{commentSiteController.selectedCommentSite.firstName}"
+					    placeholder="Mi nombre"
+					    styleClass="#{commentSiteController.getCommentFirstNameStyleClass()}" />
+					<p:inputText
+					    value="#{commentSiteController.selectedCommentSite.lastName}"
+					    placeholder="Mis apellidos"
+					    styleClass="#{commentSiteController.getCommentLastNameStyleClass()}" />
+					<p:inputText
+					    value="#{commentSiteController.selectedCommentSite.mail}"
+					    placeholder="mimail@example.com"
+					    type="email"
+					    styleClass="#{commentSiteController.getCommentMailStyleClass()}" />
+					<p:inputTextarea
+					    value="#{commentSiteController.selectedCommentSite.commentText}"
+					    placeholder="Escribe tu comentario aquí..."
+					    styleClass="#{commentSiteController.getCommentTextStyleClass()}" />
+					<div class="main__contact-section-form-item-button-container">
+						<p:commandButton value="Enviar"
+							action="#{commentSiteController.insert}"
+							styleClass="main__contact-section-form-item blckBtn btn"
+							update="@form"
+							style="background-color: rgb(0, 0, 0) !important; 
+			         	width: 26vw;
+			         	max-width: 130px" />
+					</div>
+				</div>
+			</h:form>
+		</section>
+	</main>
+
+	<footer class="footer">
+		<div class="footer__icon-container">
+			<i class="fa-regular fa-handshake"></i>
+		</div>
+		<div class="footer__information-container">
+			<small class="footer__copyright__content">© 2024,SGC</small> <small
+				class="footer__copyright__content">Tecnología de SGC</small>
+			<ul class="footer__policies-list">
+				<li><small class="footer__policie-item-container">.Política
+						de reembolso</small></li>
+				<li><small class="footer__policie-item-container">.Política
+						de privacidad</small></li>
+				<li><small class="footer__policie-item-container">.Términos
+						del servicio</small></li>
+				<li><small class="footer__policie-item-container">.Política
+						de envío</small></li>
+				<li><small class="footer__policie-item-container">.Información
+						de contacto</small></li>
+			</ul>
+		</div>
+	</footer>
+</body>
+
+<script src="https://kit.fontawesome.com/4558bafe49.js" crossorigin="anonymous"></script>
+<script src="#{resource['js/mobile-nav.js']}" crossorigin="anonymous"></script>
+<script src="#{resource['js/stickyHeader.js']}" crossorigin="anonymous"></script>
+
+
+</html>

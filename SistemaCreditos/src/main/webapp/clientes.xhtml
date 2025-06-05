@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>SGC - Clientes</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Tienda online. Ofrecemos suplementos para gimnasio, tecnología, gadgets, artículos para el hogar, y más. Todo en un solo lugar. ¡Vende con nosotros!" />
+        <meta name="robots" content="index, follow" />
+        <meta name="application-name" content="SGC" />
+        <meta name="keywords" content="suplementos para gimnasio, tecnología, gadgets, accesorios para smartphones, smart home, decoración del hogar, artículos para mascotas, equipos para deportes, ropa para bebés, juguetes educativos" />
+        <meta property="og:title" content="SGC - Tienda Online" />
+        <meta property="og:description" content="Tienda online especializada en pedidos y stock. Encuentra suplementos para gimnasio, gadgets, artículos para el hogar y más." />
+        <meta property="og:image" content="#{resource['imgs/SGClogo.png']}" />
+        <meta property="og:url" content="https://SGCworld.shop/" />
+        <meta property="og:site_name" content="SGC" />
+        <meta property="og:type" content="website" />
+        <link rel="icon" href="#{resource['imgs/SGClogo.png']}" type="image/x-icon" />
+        <link rel="stylesheet" href="#{resource['css/necolas.github.io_normalize.css_8.0.1_normalize.css']}" />
+        <link rel="stylesheet" href="#{resource['css/styles.css']}" />
+        <link rel="stylesheet" href="#{resource['css/fonts.css']}" />
+    </h:head>
+    <body>
+
+        <header class="header">
+            <div class="header__title-container">
+                <span class="header__title">*Bienvenido al Sistema de Gestión de Créditos</span>
+            </div>
+            <div class="header__utility-bar-container">
+                <a class="header__brand-name-container" href="index.xhtml"><h3 class="header__brand-name title">SGC</h3></a>
+                <nav class="header__nav-bar" id="categorieLink">
+                    <h:form>
+                        <div style="display: flex; gap: 16px;" class="ele">
+                            <h:outputLink value="clientes.xhtml" style="color: black;">Clientes</h:outputLink>
+                            <h:outputLink value="creditos.xhtml" style="color: black;">Créditos</h:outputLink>
+                            <h:outputLink value="pagos.xhtml" style="color: black;">Pagos</h:outputLink>
+                        </div>
+                    </h:form>
+                </nav>
+            </div>
+        </header>
+
+        <p:growl id="msgs" showDetail="true" life="4000" />
+
+        <main>
+
+            <section style="margin-top:100px">
+                <h:form id="mainForm">
+                    <p:dataTable var="cliente" value="#{clienteController.all}" editable="true"
+                                 styleClass="crud-table" style="width:100%;"
+                                 emptyMessage="No hay clientes registrados aún">
+
+                        <p:column headerText="ID" style="width: 5%;">
+                            <h:outputText value="#{cliente.id}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{cliente.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Cédula">
+                            <h:outputText value="#{cliente.cedula}" />
+                        </p:column>
+
+                        <p:column headerText="Correo">
+                            <h:outputText value="#{cliente.correo}" />
+                        </p:column>
+
+                        <p:column headerText="Teléfono">
+                            <h:outputText value="#{cliente.telefono}" />
+                        </p:column>
+
+                        <p:column headerText="Dirección">
+                            <h:outputText value="#{cliente.direccion}" />
+                        </p:column>
+
+                        <p:column headerText="Editar" style="width: 10%;">
+                            <p:commandButton icon="pi pi-pencil" title="Editar"
+                                             actionListener="#{clienteController.setSelectedCliente(cliente)}"
+                                             update=":formEditarCliente"
+                                             oncomplete="PF('dlgEditarCliente').show()"
+                                             styleClass="ui-button-warning" />
+                        </p:column>
+
+                        <p:column headerText="Eliminar" style="width: 10%;">
+                            <p:commandButton icon="pi pi-trash" title="Eliminar"
+                                             action="#{clienteController.delete(cliente)}"
+                                             update=":mainForm :msgs"
+                                             process="@this"
+                                             styleClass="ui-button-danger" />
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="Nuevo Cliente" icon="pi pi-plus"
+                                     onclick="PF('dlgNuevoCliente').show()"
+                                     type="button"
+                                     styleClass="btn btn-primary"
+                                     style="margin-top: 1rem; background-color:black;border:none;" />
+                </h:form>
+                <h:form id="formNuevoCliente">
+                    <p:dialog header="Agregar Nuevo Cliente" widgetVar="dlgNuevoCliente"
+                              modal="true" resizable="false" draggable="false" closable="false">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="nombre" value="Nombre:" />
+                            <p:inputText id="nombre" value="#{clienteController.selectedCliente.nombre}" required="true" />
+
+                            <h:outputLabel for="cedula" value="Cédula:" />
+                            <p:inputText id="cedula" value="#{clienteController.selectedCliente.cedula}" required="true" />
+
+                            <h:outputLabel for="correo" value="Correo:" />
+                            <p:inputText id="correo" value="#{clienteController.selectedCliente.correo}" required="true" />
+
+                            <h:outputLabel for="telefono" value="Teléfono:" />
+                            <p:inputText id="telefono" value="#{clienteController.selectedCliente.telefono}" />
+
+                            <h:outputLabel for="direccion" value="Dirección:" />
+                            <p:inputTextarea id="direccion" value="#{clienteController.selectedCliente.direccion}" autoResize="true" />
+                        </h:panelGrid>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Guardar"
+                                             icon="pi pi-check"
+                                             action="#{clienteController.insert}"
+                                             update=":mainForm :msgs"
+                                             process="@form"
+                                             oncomplete="PF('dlgNuevoCliente').hide()"
+                                             styleClass="btn btn-success" />
+
+                            <p:commandButton value="Cancelar"
+                                             icon="pi pi-times"
+                                             onclick="PF('dlgNuevoCliente').hide()"
+                                             type="button"
+                                             styleClass="btn btn-secondary" />
+                        </f:facet>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formEditarCliente">
+                    <p:dialog header="Editar Cliente" widgetVar="dlgEditarCliente"
+                              modal="true" resizable="false" draggable="false" closable="false">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="editNombre" value="Nombre:" />
+                            <p:inputText id="editNombre" value="#{clienteController.selectedCliente.nombre}" required="true" />
+
+                            <h:outputLabel for="editCedula" value="Cédula:" />
+                            <p:inputText id="editCedula" value="#{clienteController.selectedCliente.cedula}" required="true" />
+
+                            <h:outputLabel for="editCorreo" value="Correo:" />
+                            <p:inputText id="editCorreo" value="#{clienteController.selectedCliente.correo}" required="true" />
+
+                            <h:outputLabel for="editTelefono" value="Teléfono:" />
+                            <p:inputText id="editTelefono" value="#{clienteController.selectedCliente.telefono}" />
+
+                            <h:outputLabel for="editDireccion" value="Dirección:" />
+                            <p:inputTextarea id="editDireccion" value="#{clienteController.selectedCliente.direccion}" autoResize="true" />
+                        </h:panelGrid>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Actualizar"
+                                             icon="pi pi-check"
+                                             action="#{clienteController.update(clienteController.selectedCliente)}"
+                                             update=":mainForm :msgs"
+                                             process="@form"
+                                             oncomplete="PF('dlgEditarCliente').hide()"
+                                             styleClass="btn btn-success" />
+
+                            <p:commandButton value="Cancelar"
+                                             icon="pi pi-times"
+                                             onclick="PF('dlgEditarCliente').hide()"
+                                             type="button"
+                                             styleClass="btn btn-secondary" />
+                        </f:facet>
+                    </p:dialog>
+                </h:form>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer__information-container">
+                <small>© 2025, SGC</small>
+                <small>Tecnología de SGC</small>
+            </div>
+        </footer>
+
+        <script src="https://kit.fontawesome.com/4558bafe49.js" crossorigin="anonymous"></script>
+        <script src="#{resource['js/mobile-nav.js']}" crossorigin="anonymous"></script>
+        <script src="#{resource['js/stickyHeader.js']}" crossorigin="anonymous"></script>
+    </body>
+</html>

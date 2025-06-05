@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>SGC - Pagos</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Tienda online. Ofrecemos suplementos para gimnasio, tecnología, gadgets, artículos para el hogar, y más." />
+        <meta name="author" content="Diego Herrera Chaves" />
+        <meta name="robots" content="index, follow" />
+        <meta name="application-name" content="SGC" />
+        <meta name="keywords" content="suplementos, gadgets, hogar, mascotas, deportes" />
+        <meta property="og:title" content="SGC - Tienda Online" />
+        <meta property="og:description" content="Tienda online especializada en pedidos y stock." />
+        <meta property="og:image" content="#{resource['imgs/SGClogo.png']}" />
+        <meta property="og:url" content="https://SGCworld.shop/" />
+        <meta property="og:site_name" content="SGC" />
+        <meta property="og:type" content="website" />
+        <link rel="icon" href="#{resource['imgs/SGClogo.png']}" type="image/x-icon" />
+        <link rel="stylesheet" href="#{resource['css/necolas.github.io_normalize.css_8.0.1_normalize.css']}" />
+        <link rel="stylesheet" href="#{resource['css/styles.css']}" />
+        <link rel="stylesheet" href="#{resource['css/fonts.css']}" />
+    </h:head>
+    <body>
+        <header class="header">
+            <div class="header__title-container">
+                <span class="header__title">*Bienvenido al Sistema de Gestión de Créditos</span>
+            </div>
+            <div class="header__utility-bar-container">
+                <span class="header__nav-bar-mobile-icon-container"><i class="header__nav-bar-icon fa-solid fa-bars"></i></span>
+                <a class="header__brand-name-container" href="index.xhtml"><h3 class="header__brand-name title">SGC</h3></a>
+                <nav class="header__nav-bar" id="categorieLink">
+                    <h:form>
+                        <div style="display: flex; gap: 16px;" class="ele">
+                            <h:outputLink value="clientes.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">Clientes</h:outputLink>
+                            <h:outputLink value="creditos.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">Créditos</h:outputLink>
+                            <h:outputLink value="pagos.xhtml" styleClass="header__navigation-link-categorie link elee" style="color: black;">Pagos</h:outputLink>
+                        </div>
+                    </h:form>
+                </nav>
+            </div>
+        </header>
+        <p:growl id="msgs" showDetail="true" life="4000" />
+        <main>
+            <section class="main__introductory-section-container">
+                <div class="main__introductory-image-container"></div>
+                <div class="main__extra-information-container">
+                    <h3 class="main__extra-information-title">Clientes</h3>
+                    <p class="main__extra-information-description">¡Agregar clientes!</p>
+                    <h:form styleClass="main__extra-information-button-container">
+                        <p:commandButton value="Agregar"
+                                         action="#{clienteController.goToCategory}"
+                                         styleClass="main__extra-information-button btn"
+                                         style="background-color: rgb(0, 0, 0);border:none" />
+                    </h:form>
+                </div>
+            </section>
+            <section style="margin-top:100px">
+                <h:form id="mainForm" styleClass="main__crud-section-container" style="margin: 2rem;">
+                    <p:dataTable var="pago" value="#{pagoController.all}" editable="true"
+                                 styleClass="crud-table" style="width:100%;"
+                                 emptyMessage="No hay pagos registrados aún">
+
+                        <p:column headerText="ID" style="width: 5%;">
+                            <h:outputText value="#{pago.id}" />
+                        </p:column>
+                        <p:column headerText="Crédito ID">
+                            <h:outputText value="#{pago.idCredito}" />
+                        </p:column>
+                        <p:column headerText="Fecha Pago">
+                            <h:outputText value="#{pago.fechaPago}" />
+                        </p:column>
+                        <p:column headerText="Monto Pagado">
+                            <h:outputText value="#{pago.montoPagado}" />
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{pago.estado}" />
+                        </p:column>
+                        <p:column style="width: 10%;">
+                            <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{pagoController.delete(pago)}"
+                                             update=":mainForm" process="@this" styleClass="ui-button-danger" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:commandButton value="Nuevo Pago" icon="pi pi-plus" onclick="PF('dlgNuevoPago').show()"
+                                     type="button" styleClass="btn btn-primary"
+                                     style="margin-top: 1rem; background-color:black;border:none;" />
+
+                    <p:dialog header="Registrar Nuevo Pago" widgetVar="dlgNuevoPago"
+                              modal="true" resizable="false" draggable="false" closable="false">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="idCredito" value="Crédito ID:" />
+                            <p:inputText id="idCredito" value="#{pagoController.selectedPago.idCredito}" required="true" />
+
+                            <h:outputLabel for="insertFecha" value="Fecha Pago:" />
+                            <p:calendar id="insertFecha" value="#{pagoController.selectedPago.fechaPago}" pattern="yyyy-MM-dd" required="true" />
+
+                            <h:outputLabel for="monto" value="Monto Pagado:" />
+                            <p:inputText id="monto" value="#{pagoController.selectedPago.montoPagado}" required="true" />
+
+                            <h:outputLabel for="estado" value="Estado:" />
+                            <p:inputText id="estado" value="#{pagoController.selectedPago.estado}" disabled="true" />
+                        </h:panelGrid>
+                        <f:facet name="footer">
+                            <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{pagoController.insert}"
+                                             update=":mainForm msgs" oncomplete="PF('dlgNuevoPago').hide()"
+                                             styleClass="btn btn-success" />
+                            <p:commandButton value="Cancelar" icon="pi pi-times"
+                                             onclick="PF('dlgNuevoPago').hide()" type="button"
+                                             styleClass="btn btn-secondary" />
+                        </f:facet>
+                    </p:dialog>
+                </h:form>
+
+
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="footer__icon-container">
+                <i class="fa-regular fa-handshake"></i>
+            </div>
+            <div class="footer__information-container">
+                <small class="footer__copyright__content">© 2025,SGC</small>
+                <small class="footer__copyright__content">Tecnología de SGC</small>
+                <ul class="footer__policies-list">
+                    <li><small class="footer__policie-item-container">.Política de reembolso</small></li>
+                    <li><small class="footer__policie-item-container">.Política de privacidad</small></li>
+                    <li><small class="footer__policie-item-container">.Términos del servicio</small></li>
+                    <li><small class="footer__policie-item-container">.Política de envío</small></li>
+                    <li><small class="footer__policie-item-container">.Información de contacto</small></li>
+                </ul>
+            </div>
+        </footer>
+        <script src="https://kit.fontawesome.com/4558bafe49.js" crossorigin="anonymous"></script>
+        <script src="#{resource['js/mobile-nav.js']}" crossorigin="anonymous"></script>
+        <script src="#{resource['js/stickyHeader.js']}" crossorigin="anonymous"></script>
+    </body>
+</html>
